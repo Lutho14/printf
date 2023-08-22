@@ -31,6 +31,26 @@ void print_string(char *s, int *count)
 }
 
 /**
+ * handle_unknown - handle unknown
+ * @spc: prints the spc
+ * @%: printed
+ *
+ * Return: 2
+ */
+int handel_unknown(char *spc)
+{
+	char c;
+
+	if (*spc == ' ')
+		return (-1);
+
+	putchar((c): '%');
+	putchar((c): spc);
+
+	return (2);
+}
+
+/**
  * _printf - function that produces output according to a format
  * @format: character string
  * c:

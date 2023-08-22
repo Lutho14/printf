@@ -45,51 +45,41 @@ int _printf(const char *format, ...)
 {
 	int count = 0;
 	va_list args;
-	char *p;
 
 	va_start(args, format);
 
-	if (char *p = format; *p != '\0'; p++)
+	while (*format)
 	{
-		if (*p != '%')
+		if (*format == '%')
 		{
-			putchar(*p);
-			count++;
+			format++;
+
+			if (*format == '\0')
+			{
+				break;
+			}
+			if (*format == 'c')
+			{
+				char c = (char)va_arg(args, int);
+
+				print_char(c, &count);
+			}
+			else if (*format == 's')
+			{
+				char *s = va_arg(args, char *);
+
+				print_string(s, &count);
+			}
+			else
+			{
+				print_char(*format, &count);
+			}
 		}
 		else
 		{
-			switch (*++p)
-			{
-				case 'c':
-				{
-					char c = va_arg(args, int);
-
-					putchar(c);
-					count++;
-					break;
-				}
-				case 's':
-				{
-					const char *s = va_arg(args, const char *);
-
-					while (*s != '\0')
-					{
-						putchar(*s);
-						count++;
-						s++;
-					}
-					break;
-				}
-				case '%':
-						putchar('%');
-						count++;
-						break;
-					default:
-						putchar(*p);
-						count++;
-					break;
-			}
+			print_char(*format, &count);
 		}
+		format++;
 	}
 	va_end(args);
 	return (count);
